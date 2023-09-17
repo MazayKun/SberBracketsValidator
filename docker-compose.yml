@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  brackets-validator-service:
+    container_name: brackets-validator-service
+    build: .
+    ports:
+      - "${BRACKETS_VALIDATOR_SERVICE_PORT}:8080"
+    environment:
+      - BRACKETS_VALIDATOR_SERVICE_LOG_LEVEL=BRACKETS_VALIDATOR_SERVICE_LOG_LEVEL
