@@ -17,35 +17,32 @@ import java.util.Queue;
 public class BracketsValidationService implements BracketsValidationOperations {
 
     @Override
-    public boolean validateBracketsSequenceWithText(String content) {
-        try(InputStream inputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
-            return validateBracketsSequenceWithText(inputStream);
+    public boolean validateBracketsSequenceWithText(String textForValidation) {
+        try(InputStream textStream = new ByteArrayInputStream(textForValidation.getBytes(StandardCharsets.UTF_8))) {
+            return validateBracketsSequenceWithText(textStream);
         } catch (IOException e) {
             throw new TextProcessingException(e);
         }
     }
 
-    private boolean validateBracketsSequenceWithText(InputStream content) throws IOException {
+    private boolean validateBracketsSequenceWithText(InputStream textForValidationStream) throws IOException {
         Queue<Character> queue = new LinkedList<>();
         boolean hasContentBetween = false;
-        while(content.available() > 0) {
-            int curr = content.read();
-            switch (curr) {
+        while(textForValidationStream.available() > 0) {
+            int currChar = textForValidationStream.read();
+            switch (currChar) {
                 case '{', '[', '(' -> {
                     hasContentBetween = false;
-                    queue.add((char) curr);
+                    queue.add((char) currChar);
                 }
                 case '}' -> {
                     if (!hasContentBetween || queue.isEmpty() || queue.poll() != '{') return false;
-                    hasContentBetween = false;
                 }
                 case ']' -> {
                     if (!hasContentBetween || queue.isEmpty() || queue.poll() != '[') return false;
-                    hasContentBetween = false;
                 }
                 case ')' -> {
                     if (!hasContentBetween || queue.isEmpty() || queue.poll() != '(') return false;
-                    hasContentBetween = false;
                 }
                 default -> hasContentBetween = true;
             }

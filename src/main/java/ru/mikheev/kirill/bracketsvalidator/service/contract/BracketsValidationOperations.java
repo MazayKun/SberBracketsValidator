@@ -8,8 +8,8 @@ public interface BracketsValidationOperations {
     /**
      * Validate brackets sequence in text provided that there must be text between the brackets
      *
-     * @param content - text for validation
+     * @param textForValidation - text for validation
      * @return true - if brackets sequence valid, else - false
      */
-    boolean validateBracketsSequenceWithText(String content);
+    boolean validateBracketsSequenceWithText(String textForValidation);
 }
