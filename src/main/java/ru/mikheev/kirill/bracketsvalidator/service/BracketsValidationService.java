@@ -9,8 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
 @Slf4j
 @Service
@@ -26,7 +26,7 @@ public class BracketsValidationService implements BracketsValidationOperations {
     }
 
     private boolean validateBracketsSequenceWithText(InputStream textForValidationStream) throws IOException {
-        Queue<Character> queue = new LinkedList<>();
+        Deque<Character> queue = new LinkedList<>();
         boolean hasContentBetween = false;
         while(textForValidationStream.available() > 0) {
             int currChar = textForValidationStream.read();
@@ -36,13 +36,13 @@ public class BracketsValidationService implements BracketsValidationOperations {
                     queue.add((char) currChar);
                 }
                 case '}' -> {
-                    if (!hasContentBetween || queue.isEmpty() || queue.poll() != '{') return false;
+                    if (!hasContentBetween || queue.isEmpty() || queue.pollLast() != '{') return false;
                 }
                 case ']' -> {
-                    if (!hasContentBetween || queue.isEmpty() || queue.poll() != '[') return false;
+                    if (!hasContentBetween || queue.isEmpty() || queue.pollLast() != '[') return false;
                 }
                 case ')' -> {
-                    if (!hasContentBetween || queue.isEmpty() || queue.poll() != '(') return false;
+                    if (!hasContentBetween || queue.isEmpty() || queue.pollLast() != '(') return false;
                 }
                 default -> hasContentBetween = true;
             }

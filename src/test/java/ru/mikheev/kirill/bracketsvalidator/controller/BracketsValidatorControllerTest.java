@@ -1,6 +1,7 @@
 package ru.mikheev.kirill.bracketsvalidator.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ class BracketsValidatorControllerTest {
     @Autowired
     private BracketsValidationOperations bracketsValidationOperations;
 
+    @DisplayName("Test rest controller with error during text processing")
     @Test
     void testRestTextProcessingException() throws Exception {
         var requestWithException = new BracketsValidationInTextRequest();
@@ -52,6 +54,7 @@ class BracketsValidatorControllerTest {
                 .andExpect(content().string("Error during text processing"));
     }
 
+    @DisplayName("Test rest controller with unexpected error during application run")
     @Test
     void testRestSimpleRuntimeException() throws Exception {
         var requestWithException = new BracketsValidationInTextRequest();
@@ -67,6 +70,7 @@ class BracketsValidatorControllerTest {
                 .andExpect(content().string("Unknown error while request processing"));
     }
 
+    @DisplayName("Test rest controller OK result")
     @Test
     void testRestCorrectResult() throws Exception {
         var correctRequest = new BracketsValidationInTextRequest();

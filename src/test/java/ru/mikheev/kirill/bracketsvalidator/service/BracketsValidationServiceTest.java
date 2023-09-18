@@ -2,6 +2,7 @@ package ru.mikheev.kirill.bracketsvalidator.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,6 +19,7 @@ class BracketsValidationServiceTest {
 
     }
 
+    @DisplayName("Service validation test")
     @ParameterizedTest
     @MethodSource("testValidateBracketsSequenceWithTextParametersProvider")
     void testValidateBracketsSequenceWithText(String text, boolean expected) {
@@ -46,7 +48,8 @@ class BracketsValidationServiceTest {
                 Arguments.of("a", true),
                 Arguments.of("{a}", true),
                 Arguments.of("[a]", true),
-                Arguments.of("{a]", false)
+                Arguments.of("{a]", false),
+                Arguments.of("([{a}])", true)
         );
     }
 }
